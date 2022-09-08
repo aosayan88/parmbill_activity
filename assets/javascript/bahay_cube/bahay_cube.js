@@ -1,5 +1,6 @@
 var tiles = [];
 var tile_id;
+var popover_content = '';
 
 $(document).ready(function () {
     displayTiles(16);
@@ -8,29 +9,31 @@ $(document).ready(function () {
     
     $("body")
         .on("click", ".empty", showPopover)
-        .on("click", hidePopover)
+        .on("click", ".tilled", showPopover)
+        .on("click", ".till_btn", getTilled)
+        .on("click", hidePopover);
     
-    $(".empty").popover({
+    $('[data-toggle="popover"]').popover({
         placement: 'bottom',
         html: true,
-        content: '<button type="button" class="till_btn">Till</button>'
+        content: function() {
+            return $(this).hasClass("empty") ? '<button class="till_btn">Till</button>' : '<button class="plant_btn">Plant</button>'
+        }
     });
 });
 
 function showPopover(){
+    tile_id = $(this).attr("id");
+
     $(".empty").not(this).popover("hide");
+    $(".tilled").not(this).popover("hide");
 }
 
 function getTilled(){
-    let this_tile = $(this);
-    let tile_index = this_tile.attr("id");
-    tile_id = this_tile.attr("id");
-
-    console.log(tile_id)
+    let tile_index = tile_id.split("id_")[1];
     
-    //this_tile.css("background-color", "#F2994A");
-    //tiles[tile_index].till = true;
-    console.log(this_tile)
+    $(`#${tile_id}`).removeClass("empty").addClass("tilled");
+    tiles[tile_index].till = true;
 }
 
 function hidePopover(event){

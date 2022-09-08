@@ -33,11 +33,12 @@ header {
       #content_container #tiles_container #tiles_table .empty {
         background-color: #828282; }
       #content_container #tiles_container #tiles_table .tilled {
-        background-color: #219653; }
+        background-color: #f2994a; }
     #content_container #tiles_container .total_earnings {
       font: 20px/16px "Public Sans";
       font-weight: 700; }
 
+.plant_btn,
 .till_btn {
   background-color: #2F80ED;
   border: none;
@@ -47,3 +48,6 @@ header {
   font: 24px/24px "Public Sans";
   height: 40px;
   width: 100px; }
+
+.hidden {
+  display: none; }

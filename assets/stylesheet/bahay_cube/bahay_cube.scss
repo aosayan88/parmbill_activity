@@ -45,7 +45,7 @@ header {
             }
         
             .tilled {
-                background-color: #219653;
+                background-color: #f2994a;
             }
         }
 
@@ -56,6 +56,7 @@ header {
     }
 }
 
+.plant_btn,
 .till_btn {
     background-color: #2F80ED;
     border: none;
@@ -65,4 +66,8 @@ header {
     font: 24px/24px "Public Sans";
     height: 40px;
     width: 100px;
+}
+
+.hidden {
+    display: none;
 }
