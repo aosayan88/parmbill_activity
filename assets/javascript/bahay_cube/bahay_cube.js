@@ -7,10 +7,10 @@ $(document).ready(function () {
     displayTiles(16);
 
     $("body")
-        .on("click", ".empty", showPopover)
-        .on("click", ".tilled", showPopover)
-        .on("click", ".harvest", showPopover)
-        .on("click", ".till_btn", getTilled)
+        .on("click", ".empty", showPopover)                                         /** This function will show popups */
+        .on("click", ".tilled", showPopover)                                        /** This function will show popups */
+        .on("click", ".harvest", showPopover)                                       /** This function will show popups */
+        .on("click", ".till_btn", getTilled)                                        /** This function will set the tile in tilled state */
         .on("click", ".plant_btn", getPlant)
         .on("click", ".has_plant", showPopover)
         .on("dblclick", ".has_plant", getHarvest)
@@ -26,15 +26,28 @@ $(document).ready(function () {
     });
 });
 
+/** 
+    * DOCU: This function will show popups <br>
+    * Triggered By: .on("click", ".empty", showPopover) <br>
+    * Last Updated Date: Sept. 8, 2022
+    * @function
+    * @author Alfie Osayan
+*/
 function showPopover(){
     tile_id = $(this).attr("id");
+    let tile_class = $(this).attr("class");
 
-    $(".empty").not(this).popover("hide");
-    $(".tilled").not(this).popover("hide");
-    $(".has_plant").not(this).popover("hide");
-    $(".harvest").not(this).popover("hide");
+    $(`.${tile_class}`).not(this).popover("hide");
 }
 
+
+/** 
+    * DOCU: This function will set the tile in tilled state <br>
+    * Triggered By: .on("click", ".empty", showPopover) <br>
+    * Last Updated Date: Sept. 9, 2022
+    * @function
+    * @author Alfie Osayan
+*/
 function getTilled(){
     let tile_index = tile_id.split("id_")[1];
     
@@ -48,7 +61,7 @@ function getPlant(){
     
     let timer = $(`#${tile_id}`).find(".tile_text").text().split("s")[0];
 
-    //harvestTime(7)
+    harvestTime(7, tile_id);
     console.log(timer)
     tiles[tile_index].setTileStatus("has_plant");
 }
@@ -69,7 +82,6 @@ function hidePopover(event){
 }
 
 function harvestTile(){
-    let harvest_tile = $(`#${tile_id}`);
     let harvested_value = $(".tile_text").text();
 
     total_earinings += parseInt(harvested_value.split("$")[1]);
@@ -120,12 +132,13 @@ function displayTiles(number_of_tile){
     $('.total_earnings_value').text(total_earinings);
 }
 
-function harvestTime(time) {
+function harvestTime(time, tile) {
     let timer = setInterval(function() {
         time--;
+        $(`#${tile}`).find(".tile_text").text(`${time}s`);
         if (time <= 0) {
             clearInterval(timer);
+            $(`#${tile}`).removeClass("has_plant").addClass("harvest").find(".tile_text").text("$10");
         }
-        //$(`#${tile_id}`).find(".tile_text").text(`${time}s`);
     }, 1000);
 }
