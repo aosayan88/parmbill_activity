@@ -10,14 +10,14 @@ $(document).ready(function () {
         .on("click", ".empty", showPopover)                                         /** This function will show popups */
         .on("click", ".tilled", showPopover)                                        /** This function will show popups */
         .on("click", ".harvest", showPopover)                                       /** This function will show popups */
-        .on("click", ".till_btn", getTilled)                                        /** This function will set the tile in tilled state */
-        .on("click", ".plant_btn", getPlant)
-        .on("click", ".has_plant", showPopover)
-        .on("dblclick", ".has_plant", getHarvest)
-        .on("click", ".remove_btn", openRemoveModal)
-        .on("click", ".harvest_btn", harvestTile)
-        .on("click", ".remove_modal_remove_btn", removePlant)
-        .on("click", hidePopover);
+        .on("click", ".has_plant", showPopover)                                     /** This function will show popups */
+        .on("click", ".till_btn", setTilledState)                                   /** This function will set the tile in tilled state */
+        .on("click", ".plant_btn", setPlantState)                                   /** This function will set the tile in plant state */
+        .on("dblclick", ".has_plant", setHarvestState)                              /** This function will set the tile in harvest state */
+        .on("click", ".remove_btn", openRemoveModal)                                /** This function will open remove modal */
+        .on("click", ".harvest_btn", harvestTile)                                   /** This function will harvest the plant and will add the crop value to total earnings */
+        .on("click", ".remove_modal_remove_btn", removePlantState)                  /** This function will remove any state then set the tile to empty */
+        .on("click", hidePopover);                                                  /** This function will hide other popovers in page */
     
     $('[data-toggle="popover"]').popover({
         placement: 'bottom',
@@ -48,25 +48,38 @@ function showPopover(){
     * @function
     * @author Alfie Osayan
 */
-function getTilled(){
+function setTilledState(){
     let tile_index = tile_id.split("id_")[1];
     
     $(`#${tile_id}`).removeClass("empty").addClass("tilled");
     tiles[tile_index].setTileStatus("tilled");
 }
 
-function getPlant(){
+/** 
+    * DOCU: This function will set the tile in plant state <br>
+    * Triggered By: .on("click", ".plant_btn", setPlantState) <br>
+    * Last Updated Date: Sept. 9, 2022
+    * @function
+    * @author Alfie Osayan
+*/
+function setPlantState(){
     let tile_index = tile_id.split("id_")[1];
-    $(`#${tile_id}`).removeClass("tilled").addClass("has_plant").find(".tile_text").text("7s");
+    $(`#${tile_id}`).removeClass("tilled").addClass("has_plant").find(".tile_text").text("60s");
     
     let timer = $(`#${tile_id}`).find(".tile_text").text().split("s")[0];
 
-    harvestTime(7, tile_id);
-    console.log(timer)
+    harvestTime(timer, tile_id);
     tiles[tile_index].setTileStatus("has_plant");
 }
 
-function getHarvest(){
+/** 
+    * DOCU: This function will set the tile in harvest state <br>
+    * Triggered By: .on("dblclick", ".has_plant", setHarvestState) <br>
+    * Last Updated Date: Sept. 9, 2022
+    * @function
+    * @author Alfie Osayan
+*/
+function setHarvestState(){
     let tile_index = tile_id.split("id_")[1];
     let harvest_tile = $(`#${tile_id}`);
 
@@ -74,6 +87,13 @@ function getHarvest(){
     tiles[tile_index].setTileStatus("ready_to_harvest");
 }
 
+/** 
+    * DOCU: This function will hide other popovers in page <br>
+    * Triggered By: .on("click", hidePopover)  <br>
+    * Last Updated Date: Sept. 9, 2022
+    * @function
+    * @author Alfie Osayan
+*/
 function hidePopover(event){
     if ($(event.target).data('toggle') !== 'popover'
         && $(event.target).parents('.popover.in').length === 0) {
@@ -81,19 +101,40 @@ function hidePopover(event){
     }
 }
 
+/** 
+    * DOCU: This function will harvest the plant and will add the crop value to total earnings <br>
+    * Triggered By: .on("click", ".harvest_btn", harvestTile) <br>
+    * Last Updated Date: Sept. 9, 2022
+    * @function
+    * @author Alfie Osayan
+*/
 function harvestTile(){
     let harvested_value = $(".tile_text").text();
 
     total_earinings += parseInt(harvested_value.split("$")[1]);
-    removePlant();
+    removePlantState();
     $('.total_earnings_value').text(total_earinings);
 }
 
-function removePlant(){
+/** 
+    * DOCU: This function will remove any state then set the tile to empty <br>
+    * Triggered By: .on("click", ".remove_modal_remove_btn", removePlantState) <br>
+    * Last Updated Date: Sept. 9, 2022
+    * @function
+    * @author Alfie Osayan
+*/
+function removePlantState(){
     let tile = $(`#${tile_id}`);
     tile.removeClass().addClass("empty").find(".tile_text").text("");
 }
 
+/** 
+    * DOCU: This function will open remove modal <br>
+    * Triggered By: .on("click", ".remove_btn", openRemoveModal) <br>
+    * Last Updated Date: Sept. 9, 2022
+    * @function
+    * @author Alfie Osayan
+*/
 function openRemoveModal(){
     $('#remove_modal').modal({
         backdrop: "static",
@@ -101,6 +142,13 @@ function openRemoveModal(){
     });
 }
 
+/** 
+    * DOCU: This function set popovers button <br>
+    * Triggered By: $('[data-toggle="popover"]').popover() <br>
+    * Last Updated Date: Sept. 9, 2022
+    * @function
+    * @author Alfie Osayan
+*/
 function popOverButton(){
     if ($(this).hasClass("empty")) {
         return '<button class="till_btn">Till</button>';
@@ -118,6 +166,12 @@ function popOverButton(){
     }
 }
 
+/** 
+    * DOCU: This function will display default tiles <br>
+    * Last Updated Date: Sept. 9, 2022
+    * @function
+    * @author Alfie Osayan
+*/
 function displayTiles(number_of_tile){
     let tile_block = "";
 
@@ -132,6 +186,12 @@ function displayTiles(number_of_tile){
     $('.total_earnings_value').text(total_earinings);
 }
 
+/** 
+    * DOCU: This function will set the tile to harvest state <br>
+    * Last Updated Date: Sept. 9, 2022
+    * @function
+    * @author Alfie Osayan
+*/
 function harvestTime(time, tile) {
     let timer = setInterval(function() {
         time--;
