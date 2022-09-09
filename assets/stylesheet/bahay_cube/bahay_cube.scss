@@ -11,22 +11,22 @@ header {
     padding: 13px 22px;
 
     h1 {
+        color: #fff;
         font: 24px/24px "Public Sans";
         font-weight: 400;
-        color: #fff;
     }
 }
 
 #content_container {
     background-color: #6fcf97;
-    margin: 0 20px;
-    height: 700px;
     display: flex;
+    height: 700px;
     justify-content: center;
+    margin: 0 20px;
 
     #tiles_container {
-        width: 450px;
         height: 450px;
+        width: 450px;
 
         #tiles_table {
             margin-bottom: 20px;
@@ -37,7 +37,16 @@ header {
                 display: inline-block;
                 height: 100px;
                 margin: 5px;
+                outline: none;
+                padding-top: 50px;
                 width: 100px;
+
+                .tile_text {
+                    color: #fff;
+                    display: inline-block;
+                    font: 14px/14px "Public Sans";
+                    font-weight: 400;
+                }
             }
         
             .empty {
@@ -46,6 +55,16 @@ header {
         
             .tilled {
                 background-color: #f2994a;
+            }
+
+            .has_plant {
+                background: url("/assets/images/potato_icon.svg") no-repeat center 5px / 70px;
+                background-color: #f2c94c;
+            }
+
+            .harvest {
+                background: url("/assets/images/potato_icon.svg") no-repeat center 5px / 70px;
+                background-color: #219653;
             }
         }
 
@@ -56,16 +75,77 @@ header {
     }
 }
 
+.modal-body {
+    padding: 20px !important;
+
+    p {
+        color: #eb5757;
+        font: 20px/20px "Public Sans";
+        font-weight: 700;
+        text-align: center;
+    }
+
+    p + p {
+        color: #333;
+        font: 16px/20px "Public Sans";
+        font-weight: 400;
+        margin: 0 auto 35px;
+        text-align: center;
+        width: 166px;
+    }
+
+    .remove_modal_btn_group {
+        display: flex;
+        text-align: center;
+        justify-content: space-between;
+
+        button {
+            font-weight: 400;
+            font: 24px/24px "Public Sans";
+            height: 40px;
+            width: 120px;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .remove_modal_cancel_btn {
+            background-color: #eb5757;
+        }
+
+        .remove_modal_remove_btn {
+            background-color: #828282;
+        }
+    }
+}
+
+.remove_btn,
+.harvest_btn,
 .plant_btn,
 .till_btn {
     background-color: #2F80ED;
     border: none;
     border-radius: 5px;
     color: #fff;
+    display: block;
     font-weight: 400;
     font: 24px/24px "Public Sans";
     height: 40px;
+    outline: none;
     width: 100px;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+
+.harvest_btn {
+    margin-bottom: 10px;
+}
+
+.remove_btn {
+    background-color: #4f4f4f;
 }
 
 .hidden {

@@ -20,10 +20,23 @@
     <div id="content_container">
         <div id="tiles_container">
             <div id="tiles_table"></div>
-            <p class="total_earnings">Total Earnings: $50</p>
+            <p class="total_earnings">Total Earnings: $<span class="total_earnings_value"></span></p>
         </div>
-        <button type="button" class="till_btn hidden">Till</button>
-        <button type="button" class="plant_btn hidden">Plant</button>
+    </div>
+    <!-- Remove Modal -->
+    <div class="modal fade" id="remove_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Remove Plant</p>
+                <p>Are you sure you want to remove this plant?</p>
+                <div class="remove_modal_btn_group">
+                    <button class="remove_modal_cancel_btn" data-dismiss="modal">Cancel</button>
+                     <button class="remove_modal_remove_btn" data-dismiss="modal">Remove</button>
+                </div>
+            </div>
+        </div>
+        </div>
     </div>
 </body>
 </html>

@@ -1,12 +1,12 @@
 class Tile {
     constructor(id) {
         this.tile_id = id;
-        this.tilled = false;
+        this.tile_status = "empty";
         this.plant = {}
     }
 
-    getTilled(){
-        this.till = true;
+    setTileStatus(status){
+        this.tile_status = status;
     }
 
     setPlant(obj){
